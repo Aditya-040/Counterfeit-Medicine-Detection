@@ -2,16 +2,21 @@ import React from "react";
 import "../css/home.css";
 import { NavLink } from "react-router-dom";
 
-const Home = ({ account }) => {
+const Home = ({ account, onDisconnect }) => {
   return (
     <div className="container">
       <div id="login-type-container">
-        <h4 style={{ color: "#000", position: "fixed", right: 8, top: 2 }}>
-          Wallet Address:
-          {account.substring(0, 4) +
-            "..." +
-            account.substring(account.length - 4, account.length)}
-        </h4>
+        <div className="wallet-header">
+          <h4 className="wallet-address">
+            Wallet Address:{" "}
+            {account.substring(0, 4) +
+              "..." +
+              account.substring(account.length - 4, account.length)}
+          </h4>
+          <button onClick={onDisconnect} className="disconnect-btn">
+            Disconnect Wallet
+          </button>
+        </div>
         <br />
         <div id="login-type">
           <h1 id="greetings">Welcome to Medi Block!</h1>
@@ -47,6 +52,16 @@ const Home = ({ account }) => {
                   className="options-image"
                 />
                 <h1 className="options-image-caption">Authenticate Product</h1>
+              </div>
+            </NavLink>
+            <NavLink to="/medicine-auth" className="select-link">
+              <div className="options">
+                <img
+                  src="/assets/images/medicine-auth.png"
+                  alt="medicine authentication"
+                  className="options-image"
+                />
+                <h1 className="options-image-caption">AI Medicine Authentication</h1>
               </div>
             </NavLink>
           </div>

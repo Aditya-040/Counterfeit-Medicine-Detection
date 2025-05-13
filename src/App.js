@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 
 import VendorForm from "./components/VendorForm";
 import { ethers } from "ethers";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 import DistributorForm from "./components/DistributorForm";
 import Home from "./components/Home";
 import AssetTracker from "./utils/AssetTracker.json";
@@ -17,11 +17,22 @@ import SideBar from "./components/SideBar";
 
 import Authenticate from "./components/Authenticate";
 import GetStarted from "./components/getStarted";
+import BackToHome from "./components/BackToHome";
+import MedicineAuthentication from "./components/MedicineAuthentication";
 
 // const CONTRACT_ADDRESS = process.env.REACT_APP_CONTRACT_ADD;
 const CONTRACT_ADDRESS = "0x61A5C382779f7c354bcF714C7Bbc07ff55dc58C3";
 
 library.add(fas);
+
+const Layout = () => {
+  return (
+    <>
+      <BackToHome />
+      <Outlet />
+    </>
+  );
+};
 
 const App = () => {
   // console.log(process.env.REACT_APP_WALLET_ADD);
@@ -94,6 +105,16 @@ const App = () => {
     }
   };
 
+  const disconnectWallet = async () => {
+    try {
+      setCurrentAccount("");
+      setWallet("Please Connect Your Wallet to Proceed");
+      setContract(null);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     checkIfWalletIsConnected();
   }, []);
@@ -103,73 +124,45 @@ const App = () => {
       {contract ? (
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Home account={currentAccount} />}></Route>
-            {/* <Route
-              path="/vendor"
-              element={<SideBar contract={contract} account={currentAccount} />}
-            ></Route> */}
-            <Route
-              path="/vendor"
-              element={
-                <GetStarted contract={contract} account={currentAccount} />
-              }
-            >
+            <Route path="/" element={<Home account={currentAccount} onDisconnect={disconnectWallet} />} />
+            <Route element={<Layout />}>
               <Route
-                path="products"
-                element={
-                  <Products contract={contract} account={currentAccount} />
-                }
-              ></Route>
+                path="/vendor"
+                element={<GetStarted contract={contract} account={currentAccount} />}
+              >
+                <Route
+                  path="products"
+                  element={<Products contract={contract} account={currentAccount} />}
+                />
+                <Route
+                  path="addproduct"
+                  element={<VendorForm contract={contract} account={currentAccount} />}
+                />
+                <Route
+                  path="available-distributors"
+                  element={<Distributors contract={contract} account={currentAccount} />}
+                />
+              </Route>
               <Route
-                path="addproduct"
-                element={
-                  <VendorForm contract={contract} account={currentAccount} />
-                }
+                path="/distributorform"
+                element={<DistributorForm contract={contract} account={currentAccount} />}
               />
               <Route
-                path="available-distributors"
-                element={
-                  <Distributors contract={contract} account={currentAccount} />
-                }
+                path="/authenticate"
+                element={<Authenticate contract={contract} account={currentAccount} />}
+              />
+              <Route
+                path="/medicine-auth"
+                element={<MedicineAuthentication />}
               />
             </Route>
-            <Route
-              path="/distributorform"
-              element={
-                <DistributorForm contract={contract} account={currentAccount} />
-              }
-            ></Route>
-            {/* <Route
-              path="/vendor/products"
-              element={
-                <Products contract={contract} account={currentAccount} />
-              }
-            ></Route>
-            <Route
-              path="/vendor/addproduct"
-              element={
-                <VendorForm contract={contract} account={currentAccount} />
-              }
-            />
-            <Route
-              path="/vendor/available-distributors"
-              element={
-                <Distributors contract={contract} account={currentAccount} />
-              }
-            /> */}
-            <Route
-              path="/authenticate"
-              element={
-                <Authenticate contract={contract} account={currentAccount} />
-              }
-            />
           </Routes>
         </BrowserRouter>
       ) : (
         <div>
           <div>
             <div className="connectWalletContainer">
-              {wallet === "Please Connect Your Wallet to Proceed" && (
+              {wallet === "Please Connect Your Wallet to Proceed" ? (
                 <button onClick={connectWallet} className="connectWalletBtn">
                   <img
                     src={
@@ -179,6 +172,10 @@ const App = () => {
                     alt="img"
                   />{" "}
                   {wallet}
+                </button>
+              ) : (
+                <button onClick={disconnectWallet} className="disconnectWalletBtn">
+                  Disconnect Wallet
                 </button>
               )}
             </div>

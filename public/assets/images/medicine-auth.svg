@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Background Circle -->
+    <circle cx="256" cy="256" r="240" fill="#2196F3" opacity="0.1"/>
+    
+    <!-- Pill Container -->
+    <rect x="128" y="192" width="256" height="128" rx="64" fill="#2196F3"/>
+    
+    <!-- AI Brain Circuit Pattern -->
+    <path d="M192 256 C192 224, 224 224, 224 256 C224 288, 256 288, 256 256 C256 224, 288 224, 288 256 C288 288, 320 288, 320 256" 
+          stroke="white" stroke-width="12" stroke-linecap="round" fill="none"/>
+    
+    <!-- Neural Network Nodes -->
+    <circle cx="192" cy="256" r="8" fill="white"/>
+    <circle cx="256" cy="256" r="8" fill="white"/>
+    <circle cx="320" cy="256" r="8" fill="white"/>
+    
+    <!-- Scan Lines -->
+    <path d="M128 256 L384 256" stroke="white" stroke-width="4" stroke-dasharray="8 8"/>
+    
+    <!-- Verification Shield -->
+    <path d="M256 160 L320 192 L320 256 C320 288, 288 320, 256 320 C224 320, 192 288, 192 256 L192 192 Z" 
+          stroke="white" stroke-width="12" fill="none"/>
+    
+    <!-- Check Mark -->
+    <path d="M224 256 L256 288 L320 224" stroke="white" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+    
+    <!-- DNA Helix -->
+    <path d="M160 160 C160 160, 180 180, 160 200 C140 220, 160 240, 160 240" 
+          stroke="#2196F3" stroke-width="8" fill="none"/>
+    <path d="M352 160 C352 160, 332 180, 352 200 C372 220, 352 240, 352 240" 
+          stroke="#2196F3" stroke-width="8" fill="none"/>
+</svg> 
